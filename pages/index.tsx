@@ -1,7 +1,16 @@
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 
-export const Home = (): JSX.Element => (
+import { App } from '../interfaces'
+import { sampleAppData } from '../utils/sample-data'
+import List from '../components/List'
+
+type Props = {
+  items: App[]
+}
+
+export const Home = ({ items }: Props): JSX.Element => (
   <div className="container">
     <Head>
       <title>Create Next App</title>
@@ -12,6 +21,8 @@ export const Home = (): JSX.Element => (
       <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
+
+      <List items={items} />
 
       <p className="description">
         Get started by editing <code>pages/index.tsx</code>
@@ -207,5 +218,10 @@ export const Home = (): JSX.Element => (
     `}</style>
   </div>
 )
+
+export const getStaticProps: GetStaticProps = async () => {
+  const items: App[] = sampleAppData
+  return { props: { items } }
+}
 
 export default Home
